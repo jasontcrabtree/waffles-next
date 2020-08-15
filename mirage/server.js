@@ -1,6 +1,6 @@
-import { buildSchema, graphql } from "graphql";
-import { Server, Model } from "miragejs";
-import recipes from "./recipes";
+import { buildSchema, graphql } from 'graphql';
+import { Server, Model } from 'miragejs';
+import recipes from './recipes';
 
 // Construct a schema, using GraphQL schema language
 let graphqlSchema = buildSchema(`
@@ -27,8 +27,8 @@ let graphqlSchema = buildSchema(`
     recipeUrl: String
   }
   input recipes_order_by {
-    id: order_by 
-    name: order_by 
+    id: order_by
+    name: order_by
   }
   enum order_by {
     asc
@@ -44,7 +44,7 @@ let graphqlSchema = buildSchema(`
   `);
 
 export default function makeServer() {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     if (window.server) {
       window.server.shutdown();
       delete window.server;
@@ -60,9 +60,9 @@ export default function makeServer() {
       },
 
       routes() {
-        this.urlPrefix = "https://samselikoff-recipes-backend.herokuapp.com";
+        this.urlPrefix = 'https://jtc-nextjs-course.herokuapp.com/v1/graphql';
 
-        this.post("/v1/graphql", (schema, request) => {
+        this.post('/v1/graphql', (schema, request) => {
           let requestJson = JSON.parse(request.requestBody);
           let query = requestJson.query;
           let variables = requestJson.variables;
@@ -72,7 +72,7 @@ export default function makeServer() {
               let recipes = JSON.parse(JSON.stringify(schema.db.recipes));
 
               if (queryArgs.order_by) {
-                queryArgs.order_by.forEach((ordering) => {
+                queryArgs.order_by.forEach(ordering => {
                   let key = Object.keys(ordering)[0];
                   recipes = recipes.sort((a, b) => (a[key] > b[key] ? 1 : -1));
                 });
@@ -82,7 +82,7 @@ export default function makeServer() {
             },
 
             insert_recipes(mutationArgs) {
-              let newRecipes = mutationArgs.objects.map((recipe) => {
+              let newRecipes = mutationArgs.objects.map(recipe => {
                 return schema.db.recipes.insert(recipe);
               });
 
@@ -93,7 +93,7 @@ export default function makeServer() {
           };
 
           return graphql(graphqlSchema, query, resolver, null, variables).then(
-            (response) => {
+            response => {
               return response;
             }
           );

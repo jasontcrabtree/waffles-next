@@ -1,10 +1,10 @@
-import { request } from "graphql-request";
-import useSWR from "swr";
-import { AspectRatio } from "@ui";
-import Link from "next/link";
+import { request } from 'graphql-request';
+import useSWR from 'swr';
+// import { AspectRatio } from '@ui';  // previously wrapped around img, removed for simplicity
+import Link from 'next/link';
 
-const API = "https://samselikoff-recipes-backend.herokuapp.com/v1/graphql";
-const fetcher = (query) => request(API, query);
+const API = 'https://jtc-nextjs-course.herokuapp.com/v1/graphql';
+const fetcher = query => request(API, query);
 
 export default function Home() {
   const { data, error } = useSWR(
@@ -20,21 +20,12 @@ export default function Home() {
 
   return (
     <div>
-      <header className="p-4 border-b-2 border-gray-200 flex justify-center items-center relative">
-        <h1 className="text-3xl font-semibold text-gray-700">All Recipes</h1>
+      <header className="p-8 border-b-2 border-gray-200 flex justify-left items-center relative">
+        <h1 className="text-2xl pl-20 font-medium uppercase text-gray-200">
+          All Recipes
+        </h1>
         <Link href="/new">
-          <a className="absolute right-0 mr-4 flex items-center text-blue-500 focus:outline-none focus:shadow-outline rounded-full p-1 pr-2">
-            <svg
-              className="w-4 h-4 mr-1"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 4v16m8-8H4"></path>
-            </svg>
+          <a className="absolute pr-24 right-0 mr-4 flex text-orange-500">
             Add
           </a>
         </Link>
@@ -46,16 +37,16 @@ export default function Home() {
         ) : data.recipes.length === 0 ? (
           <p>No recipes.</p>
         ) : (
-          <div className="px-12 space-y-12">
-            {data.recipes.map((recipe) => (
+          <div className="px-32 space-y-8 ">
+            {data.recipes.map(recipe => (
               <div key={recipe.id} className="relative">
-                <AspectRatio ratio={4 / 5}>
+                <div>
                   <img
                     src={recipe.imageUrl}
                     className="w-full h-full object-cover rounded-lg"
                   />
-                </AspectRatio>
-                <p className="bg-white m-2 rounded px-2 py-1 bg-opacity-90 text-sm font-semibold absolute bottom-0 inset-x-0">
+                </div>
+                <p className="bg-white m-4 rounded px-4 py-4 bg-opacity-90 text-sm font-semibold absolute bottom-0 inset-x-0">
                   {recipe.name}
                 </p>
               </div>

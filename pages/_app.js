@@ -1,8 +1,8 @@
-import "../styles/index.css";
-import Head from "next/head";
-import makeServer from "../mirage/server";
+import '../styles/index.css';
+import Head from 'next/head';
+// import makeServer from '../mirage/server';
 
-makeServer();
+// makeServer();
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -12,11 +12,10 @@ function MyApp({ Component, pageProps }) {
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </Head>
 
-      <div className="sm:pt-8 h-screen w-screen overflow-y-hidden bg-cool-gray-400">
+      <div className="sm:pt-8 h-screen w-screen overflow-y-hidden bg-cool-gray-900">
         <div
-          className="bg-white mx-auto overflow-hidden shadow-xl sm:rounded overflow-y-auto"
-          style={{ maxWidth: "375px", height: "812px" }}
-        >
+          className="bg-gray-700 px-8 pb-16 mx-auto overflow-hidden shadow-xl sm:rounded overflow-y-auto "
+          style={{ maxWidth: '720px', height: '814px' }}>
           <Component {...pageProps} />
         </div>
       </div>
